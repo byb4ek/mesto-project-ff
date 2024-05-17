@@ -1,28 +1,32 @@
 import "../src/index.css";
 import { initialCards } from "./cards";
+import { openModal, closeModal, clickOverlay,escKeyPressClose } from "./componets/modal";
+import { createCard, deleteCard } from "./componets/card";
 
 const template = document.querySelector("#card-template").content;
 const cardList = document.querySelector(".places__list");
 
-function createCard(infoCard, deleteCard) {
-  const card = template.querySelector(".card").cloneNode(true);
-  const cardImage = card.querySelector(".card__image");
-  const cardTitle = card.querySelector(".card__title");
-  const cardDeleteButton = card.querySelector(".card__delete-button");
-  cardImage.alt = infoCard.name;
-  cardImage.src = infoCard.link;
-  cardTitle.textContent = infoCard.name;
-  cardDeleteButton.addEventListener("click", () => {
-    deleteCard(card);
-  });
-  return card;
-}
+const popup = document.querySelector(".popup");
+const popupAll = document.querySelectorAll(".popup");
+const profileEditButton = document.querySelector(".profile__edit-button");
+const popupProfileOpen = document.querySelector(".profile__add-button");
+const popupClose = document.querySelector(".popup__close");
+/* const overlayPopup = document.querySelector('.popup_type_edit'); */
 
-function deleteCard(card) {
-  card.remove();
-}
+//кнопка редактировать
+profileEditButton.addEventListener("click",()=>{openModal(popup)});
+//кнопка плюсика
+popupProfileOpen.addEventListener("click", ()=>{openModal(popup)});
+//кнопка крестика в попапе
+popupClose.addEventListener("click", ()=>{closeModal(popup)});
+popup.addEventListener("click", clickOverlay);
+document.addEventListener("keydown",escKeyPressClose);
 
 initialCards.forEach((item) => {
-  const saveCard = createCard(item, deleteCard);
+  const saveCard = createCard(item,template,deleteCard);
   cardList.append(saveCard);
 });
+
+popupAll.forEach((item)=>{
+	item.classList.add("popup-is_animated");
+})
