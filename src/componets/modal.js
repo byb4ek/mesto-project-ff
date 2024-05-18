@@ -1,24 +1,19 @@
-export function openModal(evt) {
-	//принимает в качестве аргумнета дом элемент модального окна
-	// с которым производим действие
-	evt.classList.add("popup_is-opened");
-	evt.classList.remove("popup_is-animated");
-  console.log("enter");
+export function openModal(currentPopup) {
+  currentPopup.addEventListener("click", clickOverlay);
+	document.addEventListener("keydown",escKeyPressClose);
+  currentPopup.classList.add("popup_is-opened");
 }
 
-export function closeModal(evt) {
-	//принимает в качестве аргумнета дом элемент модального окна
-	// с которым производим действие
-	evt.classList.remove("popup_is-opened");
-	evt.classList.add("popup_is-animated");
-  console.log("out");
+export function closeModal(currentPopup) {
+  currentPopup.classList.remove("popup_is-opened");
 }
 
 export function clickOverlay(evt) {
   if (evt.target === evt.currentTarget) {
-		const popup = document.querySelector(".popup_is-opened");
-    closeModal(popup);
-    console.log("overlay");
+    const popup = document.querySelector(".popup_is-opened");
+    if (popup) {
+      closeModal(popup);
+    }
   }
 }
 
