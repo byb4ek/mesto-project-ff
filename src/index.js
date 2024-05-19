@@ -9,14 +9,14 @@ const cardList = document.querySelector(".places__list");
 const popupAll = document.querySelectorAll('.popup');
 const profileEditButton = document.querySelector(".profile__edit-button");
 const popupNewCard = document.querySelector(".profile__add-button");
-/* const popupCardImg = document.querySelector('.card__image'); */
 
 const popupTypeEdit = document.querySelector(".popup_type_edit");
 const popupTypeNewCard = document.querySelector(".popup_type_new-card");
-/* const popupTypeImage = document.querySelector(".popup_type_image"); */
+const popupTypeImage = document.querySelector('.popup_type_image');
 
 const popupCloseEdit = popupTypeEdit.querySelector(".popup__close");
 const popupCloseCard = popupTypeNewCard.querySelector(".popup__close");
+const popupCloseImage = popupTypeImage.querySelector(".popup__close");
 
 const formNewCard = document.forms["new-place"];
 const titleNewCard =formNewCard["place-name"]; 
@@ -28,11 +28,6 @@ const profileDescription = document.querySelector(".profile__description");
 const formElement = document.querySelector(".popup__content"); 
 const nameInput =formElement.querySelector(".popup__input_type_name"); 
 const jobInput = formElement.querySelector(".popup__input_type_description");
-// const popupClose = popupTypeEdit.querySelector(".popup__close");
-
-//вешаем на кнопку закрытия слушатель и передаем колбеком 
-// (через анонимную функцию) 
-// общий класс который нужно закрыть
 
 profileEditButton.addEventListener("click",()=>{
 	openModal(popupTypeEdit),dataToForm(profileTitle,profileDescription)
@@ -47,7 +42,7 @@ formElement.addEventListener('submit', handleFormSubmit);
 formNewCard.addEventListener('submit', addCard);
 
 initialCards.forEach((item) => {
-  const saveCard = createCard(item,template,likeCard,deleteCard);
+  const saveCard = createCard(item,template,likeCard,popupImage,deleteCard);
   cardList.append(saveCard);
 });
 
@@ -79,8 +74,20 @@ function addCard(evt) {
 	const newCards = {};
 	newCards.name = titleCard;
 	newCards.link = urlCard;
-	const saveNewCard=createCard(newCards,template,likeCard,deleteCard);
+	const saveNewCard=createCard(newCards,template,likeCard,popupImage,deleteCard);
 	closeModal(popupTypeNewCard);
   cardList.prepend(saveNewCard);
 	formNewCard.reset();
+}
+
+function popupImage(cardInfo){
+	const imgPop = popupTypeImage.querySelector('.popup__image');
+	const caption = popupTypeImage.querySelector('.popup__caption');
+  imgPop.alt = cardInfo.name;
+  imgPop.src = cardInfo.link;
+	caption.textContent=cardInfo.name;
+	popupCloseImage.addEventListener("click", ()=>{closeModal(popupTypeImage)});
+	
+	openModal(popupTypeImage);
+	console.log("das");
 }
