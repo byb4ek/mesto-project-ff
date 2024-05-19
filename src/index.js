@@ -19,7 +19,13 @@ const popupCloseEdit = popupTypeEdit.querySelector(".popup__close");
 const popupCloseCard = popupTypeNewCard.querySelector(".popup__close");
 // const popupClose = popupTypeEdit.querySelector(".popup__close");
 
-profileEditButton.addEventListener("click",()=>{openModal(popupTypeEdit)});
+//вешаем на кнопку закрытия слушатель и передаем колбеком 
+// (через анонимную функцию) 
+// общий класс который нужно закрыть
+
+profileEditButton.addEventListener("click",()=>{
+	openModal(popupTypeEdit),dataToForm(profileTitle,profileDescription)
+});
 popupNewCard.addEventListener("click", ()=>{openModal(popupTypeNewCard)});
 popupCloseEdit.addEventListener("click", ()=>{closeModal(popupTypeEdit)});
 popupCloseCard.addEventListener("click", ()=>{closeModal(popupTypeNewCard)});
@@ -33,38 +39,51 @@ popupAll.forEach((item)=>{
 	item.classList.add("popup_is-animated");
 });
 
-// Находим форму в DOM
-const formElement = document.querySelector(".popup__content"); // Воспользуйтесь методом querySelector()
-// Находим поля формы в DOM
-const nameInput =formElement.querySelector(".popup__input_type_name"); // Воспользуйтесь инструментом .querySelector()
-const jobInput = formElement.querySelector(".popup__input_type_description");// Воспользуйтесь инструментом .querySelector()
+const profileTitle = document.querySelector(".profile__title");
+const profileDescription = document.querySelector(".profile__description");
 
-// Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
-function handleFormSubmit(evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-    // Получите значение полей jobInput и nameInput из свойства value
-		jobInput.value
-		nameInput.value
-
-    // Выберите элементы, куда должны быть вставлены значения полей
-
-    // Вставьте новые значения с помощью textContent
+function dataToForm (title,descript){
+	const formEditProfile = document.forms["edit-profile"];
+	const name = formEditProfile.name;
+	const describe = formEditProfile.description;
+	name.value = title.textContent;
+	describe.value = descript.textContent;
 }
 
-formElement.addEventListener('submit', handleFormSubmit);
+const formElement = document.querySelector(".popup__content"); 
+const nameInput =formElement.querySelector(".popup__input_type_name"); 
+const jobInput = formElement.querySelector(".popup__input_type_description");
 
-/* popupClose.forEach((buttonItem)=>{
-	buttonItem.addEventListener("click", closeModal);
-});
- */
+function handleFormSubmit(evt) {
+    evt.preventDefault(); 
+		const jobValue = jobInput.value;
+		const nameValue = nameInput.value;
+		profileTitle.textContent = nameValue;
+		profileDescription.textContent = jobValue;
+		closeModal(popupTypeEdit);
+}
 
-/* popup.addEventListener("click",()=>{
-	
-}) */
+/* formElement.addEventListener('submit', handleFormSubmit);
 
-/* const imgCard = querySelector('.card__image');
-imgCard.addEventListener("click", ()=>{
-	openModal(imgCard);
-	console.log('img');
-}) */
+const formNewCard = document.querySelector(".popup__form"); 
+const titleNewCard =formElement.querySelector(".popup__input_type_card-name"); 
+const urlNewCard = formElement.querySelector(".popup__input_type_url");
+
+function addCard(evt) {
+	evt.preventDefault(); 
+	const titleCard = titleNewCard.value;
+	const urlCard = urlNewCard.value;
+	console.log(titleCard);
+	console.log(urlCard);
+
+	const newCards = [{}];
+	newCards.name = titleCard;
+	newCards.link = urlCard;
+	console.log(newCards);
+	const saveNewCard=createCard(newCards,template,deleteCard);
+	closeModal(popupTypeNewCard);
+  cardList.append(saveNewCard);
+
+}
+
+formNewCard.addEventListener('submit', addCard); */
