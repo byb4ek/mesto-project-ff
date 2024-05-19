@@ -31,7 +31,7 @@ popupCloseEdit.addEventListener("click", ()=>{closeModal(popupTypeEdit)});
 popupCloseCard.addEventListener("click", ()=>{closeModal(popupTypeNewCard)});
 
 initialCards.forEach((item) => {
-  const saveCard = createCard(item,template,deleteCard);
+  const saveCard = createCard(item,template,likeCard,deleteCard);
   cardList.append(saveCard);
 });
 
@@ -63,27 +63,37 @@ function handleFormSubmit(evt) {
 		closeModal(popupTypeEdit);
 }
 
-/* formElement.addEventListener('submit', handleFormSubmit);
+formElement.addEventListener('submit', handleFormSubmit);
 
-const formNewCard = document.querySelector(".popup__form"); 
-const titleNewCard =formElement.querySelector(".popup__input_type_card-name"); 
-const urlNewCard = formElement.querySelector(".popup__input_type_url");
+const formNewCard = document.forms["new-place"];
+const titleNewCard =formNewCard["place-name"]; 
+const urlNewCard = formNewCard.link;
 
 function addCard(evt) {
 	evt.preventDefault(); 
 	const titleCard = titleNewCard.value;
 	const urlCard = urlNewCard.value;
-	console.log(titleCard);
-	console.log(urlCard);
-
 	const newCards = [{}];
 	newCards.name = titleCard;
 	newCards.link = urlCard;
-	console.log(newCards);
-	const saveNewCard=createCard(newCards,template,deleteCard);
+	const saveNewCard=createCard(newCards,template,likeCard,deleteCard);
 	closeModal(popupTypeNewCard);
-  cardList.append(saveNewCard);
-
+  cardList.prepend(saveNewCard);
+	formNewCard.reset();
 }
 
-formNewCard.addEventListener('submit', addCard); */
+formNewCard.addEventListener('submit', addCard);
+
+function likeCard(){
+	/* const like= document.querySelector(".card__like-button");
+	likeAll.forEach((item)=>{
+		item.classList.add("popup_is-animated");
+	});
+	like.addEventListener("click",(evt)=>{
+		if(evt.target === evt.currentTarget ){
+		like.classList.add('card__like-button_is-active');
+		} else {
+		like.classList.remove('card__like-button_is-active');
+		}
+	}) */
+}
