@@ -15,10 +15,6 @@ const popupTypeEdit = document.querySelector(".popup_type_edit");
 const popupTypeNewCard = document.querySelector(".popup_type_new-card");
 const popupTypeImage = document.querySelector('.popup_type_image');
 
-/* const popupCloseEdit = popupTypeEdit.querySelector(".popup__close");
-const popupCloseCard = popupTypeNewCard.querySelector(".popup__close");
-const popupCloseImage = popupTypeImage.querySelector(".popup__close"); */
-
 const formNewCard = document.forms["new-place"];
 const titleNewCard =formNewCard["place-name"]; 
 const urlNewCard = formNewCard.link;
@@ -35,11 +31,7 @@ profileEditButton.addEventListener("click",()=>{
 });
 
 popupNewCard.addEventListener("click", ()=>{openModal(popupTypeNewCard)});
-/* popupCloseEdit.addEventListener("click", ()=>{closeModal(popupTypeEdit)});
-popupCloseCard.addEventListener("click", ()=>{closeModal(popupTypeNewCard)}); */
-
 formElement.addEventListener('submit', handleFormSubmit);
-
 formNewCard.addEventListener('submit', addCard);
 
 initialCards.forEach((item) => {
@@ -58,8 +50,6 @@ popupCloseAll.forEach((item)=>{
 	});
 });
 
-
-
 function dataToForm (title,descript){
 	const formEditProfile = document.forms["edit-profile"];
 	const name = formEditProfile.name;
@@ -74,7 +64,6 @@ function handleFormSubmit(evt) {
 		const nameValue = nameInput.value;
 		profileTitle.textContent = nameValue;
 		profileDescription.textContent = jobValue;
-	/* 	closeModal(popupTypeEdit); */
 }
 
 function addCard(evt) {
@@ -85,7 +74,6 @@ function addCard(evt) {
 	newCards.name = titleCard;
 	newCards.link = urlCard;
 	const saveNewCard=createCard(newCards,template,likeCard,popupImage,deleteCard);
-	/* closeModal(popupTypeNewCard); */
   cardList.prepend(saveNewCard);
 	formNewCard.reset();
 }
@@ -96,8 +84,6 @@ function popupImage(cardInfo){
   imgPop.alt = cardInfo.name;
   imgPop.src = cardInfo.link;
 	caption.textContent=cardInfo.name;
-	/* popupCloseImage.addEventListener("click", ()=>{closeModal(popupTypeImage)}); */
-	
 	openModal(popupTypeImage);
 	console.log("das");
 }
