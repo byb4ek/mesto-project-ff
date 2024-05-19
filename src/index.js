@@ -1,6 +1,6 @@
 import "../src/index.css";
 import { initialCards } from "./cards";
-import { openModal, closeModal, clickOverlay,escKeyPressClose } from "./componets/modal";
+import { openModal, closeModal} from "./componets/modal";
 import { createCard, deleteCard,likeCard } from "./componets/card";
 
 const template = document.querySelector("#card-template").content;
@@ -22,20 +22,20 @@ const urlNewCard = formNewCard.link;
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 
-const formElement = document.querySelector(".popup__content"); 
-const nameInput =formElement.querySelector(".popup__input_type_name"); 
-const jobInput = formElement.querySelector(".popup__input_type_description");
+const popupContent = document.querySelector(".popup__content"); 
+const nameInput = popupContent.querySelector(".popup__input_type_name"); 
+const jobInput = popupContent.querySelector(".popup__input_type_description");
 
 profileEditButton.addEventListener("click",()=>{
-	openModal(popupTypeEdit),dataToForm(profileTitle,profileDescription)
+	openModal(popupTypeEdit),fillDataToProfileForm(profileTitle,profileDescription)
 });
 
 popupNewCard.addEventListener("click", ()=>{openModal(popupTypeNewCard)});
-formElement.addEventListener('submit', handleFormSubmit);
+popupContent.addEventListener('submit', popupEditProfileFormSubmit);
 formNewCard.addEventListener('submit', addCard);
 
 initialCards.forEach((item) => {
-  const saveCard = createCard(item,template,likeCard,popupImage,deleteCard);
+  const saveCard = createCard(item,template,likeCard,openPopupImage,deleteCard);
   cardList.append(saveCard);
 });
 
@@ -50,7 +50,7 @@ popupCloseAll.forEach((item)=>{
 	});
 });
 
-function dataToForm (title,descript){
+function fillDataToProfileForm (title,descript){
 	const formEditProfile = document.forms["edit-profile"];
 	const name = formEditProfile.name;
 	const describe = formEditProfile.description;
@@ -58,32 +58,37 @@ function dataToForm (title,descript){
 	describe.value = descript.textContent;
 }
 
-function handleFormSubmit(evt) {
+function popupEditProfileFormSubmit(evt) {
     evt.preventDefault(); 
 		const jobValue = jobInput.value;
 		const nameValue = nameInput.value;
 		profileTitle.textContent = nameValue;
 		profileDescription.textContent = jobValue;
+		closeModal(popupTypeEdit);
 }
 
 function addCard(evt) {
 	evt.preventDefault(); 
 	const titleCard = titleNewCard.value;
 	const urlCard = urlNewCard.value;
-	const newCards = {};
+	const newCards = 
+	{
+		name:titleCard,
+		link:urlCard
+	};
 	newCards.name = titleCard;
 	newCards.link = urlCard;
-	const saveNewCard=createCard(newCards,template,likeCard,popupImage,deleteCard);
+	const saveNewCard = createCard(newCards,template,likeCard,openPopupImage,deleteCard);
   cardList.prepend(saveNewCard);
+	closeModal(popupTypeNewCard);
 	formNewCard.reset();
 }
 
-function popupImage(cardInfo){
+function openPopupImage(cardInfo){
 	const imgPop = popupTypeImage.querySelector('.popup__image');
 	const caption = popupTypeImage.querySelector('.popup__caption');
   imgPop.alt = cardInfo.name;
   imgPop.src = cardInfo.link;
 	caption.textContent=cardInfo.name;
 	openModal(popupTypeImage);
-	console.log("das");
 }

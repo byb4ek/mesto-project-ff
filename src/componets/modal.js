@@ -5,15 +5,14 @@ export function openModal(currentPopup) {
 }
 
 export function closeModal(currentPopup) {
-  currentPopup.classList.remove("popup_is-opened");
+	currentPopup.removeEventListener("click", clickOverlay);
+	document.removeEventListener("keydown",escKeyPressClose);
+	currentPopup.classList.remove("popup_is-opened");
 }
 
 export function clickOverlay(evt) {
   if (evt.target === evt.currentTarget) {
-    const popup = document.querySelector(".popup_is-opened");
-    if (popup) {
-      closeModal(popup);
-    }
+      closeModal(evt.currentTarget);
   }
 }
 
