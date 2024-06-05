@@ -39,13 +39,16 @@ const validationCofig = {
 };
 
 profileEditButton.addEventListener("click", () => {
-  openModal(popupTypeEdit),
-    fillDataToProfileForm(profileTitle, profileDescription);
+  openModal(popupTypeEdit);
+	clearValidation(formNewProfile,validationCofig);
+  fillDataToProfileForm(profileTitle, profileDescription);
 });
 
 popupNewCard.addEventListener("click", () => {
   openModal(popupTypeNewCard);
+	clearValidation(formNewCard,validationCofig)
 });
+
 popupContent.addEventListener("submit", popupEditProfileFormSubmit);
 formNewCard.addEventListener("submit", addCard);
 
@@ -120,5 +123,3 @@ function openPopupImage(cardInfo) {
 }
 
 enableValidation(validationCofig);
-
-/* clearValidation(profileForm, validationConfig);  */

@@ -1,10 +1,16 @@
-export function clearValidation() {
-
+export function clearValidation(formElement, config) {
+  const inputList = Array.from(
+    formElement.querySelectorAll(config.inputSelector)
+  );
+  const buttonElement = formElement.querySelector(config.submitButtonSelector);
+	inputList.forEach((inputElement)=>{
+		hideInputError(formElement, inputElement, config);
+	});
+  toggleButtonState(inputList, buttonElement, config);
 }
 
 function showInputError(formElement, inputElement, errorMessage, config) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  console.log(errorMessage);
   inputElement.classList.add(config.inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(config.errorClass);
@@ -26,7 +32,12 @@ function checkInputValidity(formElement, inputElement, config) {
     }
     //Если наш input не валиден то показываем ошибку
     //Передаем Форму инпутов,сам инпут и сообщение ошибки
-    showInputError(formElement,inputElement,inputElement.validationMessage,config);
+    showInputError(
+      formElement,
+      inputElement,
+      inputElement.validationMessage,
+      config
+    );
   } else {
     hideInputError(formElement, inputElement, config);
   }
@@ -52,12 +63,12 @@ const setEventListeners = (formElement, config) => {
     formElement.querySelectorAll(config.inputSelector)
   );
   const buttonElement = formElement.querySelector(config.submitButtonSelector);
-  toggleButtonState(inputList,buttonElement,config);
+  //toggleButtonState(inputList,buttonElement,config);
   inputList.forEach((inputElement) => {
     //inputElement это наш один текущий инпут
     inputElement.addEventListener("input", () => {
       checkInputValidity(formElement, inputElement, config);
-      toggleButtonState(inputList,buttonElement,config);
+      toggleButtonState(inputList, buttonElement, config);
       //передаем форму и инпут текущий потом будет следующий
     });
   });
