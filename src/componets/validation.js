@@ -1,41 +1,48 @@
+export function clearValidation() {}
 
-export function clearValidation(){
-
-}
-
-function showInputError (formElement,inputElement,errorMessage,config){
-	const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-	console.log(inputElement.id);
-	inputElement.classList.add(config.inputErrorClass);
-	errorElement.textContent = errorMessage;
+function showInputError(formElement, inputElement, errorMessage, config) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  console.log(errorMessage);
+  inputElement.classList.add(config.inputErrorClass);
+  errorElement.textContent = errorMessage;
   errorElement.classList.add(config.errorClass);
 }
 
-function hideInputError(formElement,inputElement,config){
-	const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-	inputElement.classList.remove(config.inputErrorClass);
+function hideInputError(formElement, inputElement, config) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove(config.inputErrorClass);
   errorElement.classList.remove(config.errorClass);
-	errorElement.textContent = '';
+  errorElement.textContent = "";
 }
 
-function checkInputValidity(formElement,inputElement,config){
+function checkInputValidity(formElement, inputElement, config) {
   if (!inputElement.validity.valid) {
-		//Если наш input не валиден то показываем ошибку
-		//Передаем Форму инпутов,сам инпут и сообщение ошибки		
-    showInputError(formElement,inputElement,inputElement.validationMessage,config);
+    if (inputElement.validity.patternMismatch) {
+      inputElement.setCustomValidity(inputElement.dataset.errorMessage);
+    } else {
+      inputElement.setCustomValidity("");
+    }
+    //Если наш input не валиден то показываем ошибку
+    //Передаем Форму инпутов,сам инпут и сообщение ошибки
+    showInputError(
+      formElement,
+      inputElement,
+      inputElement.validationMessage,
+      config
+    );
   } else {
-    hideInputError(formElement,inputElement,config);
+    hideInputError(formElement, inputElement, config);
   }
 }
 
 //если поле не валидно вернет true
 const hasInvalidInput = (inputList) => {
   return inputList.some((inputElement) => {
-    return !inputElement.validity.valid
-  })
+    return !inputElement.validity.valid;
+  });
 };
 
- const toggleButtonState = (inputList, buttonElement,config) => {
+const toggleButtonState = (inputList, buttonElement, config) => {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add(config.inactiveButtonClass);
   } else {
@@ -43,16 +50,18 @@ const hasInvalidInput = (inputList) => {
   }
 };
 
-const setEventListeners = (formElement,config) => {
-  const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
-	//const buttonElement = formElement.querySelector(config.submitButtonSelector);
-	//toggleButtonState(inputList,buttonElement,config);
+const setEventListeners = (formElement, config) => {
+  const inputList = Array.from(
+    formElement.querySelectorAll(config.inputSelector)
+  );
+  //const buttonElement = formElement.querySelector(config.submitButtonSelector);
+  //toggleButtonState(inputList,buttonElement,config);
   inputList.forEach((inputElement) => {
-		//inputElement это наш один текущий инпут 
-    inputElement.addEventListener('input', () => {
+    //inputElement это наш один текущий инпут
+    inputElement.addEventListener("input", () => {
       checkInputValidity(formElement, inputElement, config);
-		//	toggleButtonState(inputList,buttonElement,config);
-			//передаем форму и инпут текущий потом будет следующий 
+      //	toggleButtonState(inputList,buttonElement,config);
+      //передаем форму и инпут текущий потом будет следующий
     });
   });
 };
@@ -60,9 +69,9 @@ const setEventListeners = (formElement,config) => {
 export const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((formElement) => {
-		formElement.addEventListener('submit',(evt)=>{
-			evt.preventDefault();
-		})
-    setEventListeners(formElement,config);
+    formElement.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+    });
+    setEventListeners(formElement, config);
   });
 };
