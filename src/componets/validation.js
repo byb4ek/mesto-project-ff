@@ -1,4 +1,6 @@
-export function clearValidation() {}
+export function clearValidation() {
+
+}
 
 function showInputError(formElement, inputElement, errorMessage, config) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
@@ -24,12 +26,7 @@ function checkInputValidity(formElement, inputElement, config) {
     }
     //Если наш input не валиден то показываем ошибку
     //Передаем Форму инпутов,сам инпут и сообщение ошибки
-    showInputError(
-      formElement,
-      inputElement,
-      inputElement.validationMessage,
-      config
-    );
+    showInputError(formElement,inputElement,inputElement.validationMessage,config);
   } else {
     hideInputError(formElement, inputElement, config);
   }
@@ -54,13 +51,13 @@ const setEventListeners = (formElement, config) => {
   const inputList = Array.from(
     formElement.querySelectorAll(config.inputSelector)
   );
-  //const buttonElement = formElement.querySelector(config.submitButtonSelector);
-  //toggleButtonState(inputList,buttonElement,config);
+  const buttonElement = formElement.querySelector(config.submitButtonSelector);
+  toggleButtonState(inputList,buttonElement,config);
   inputList.forEach((inputElement) => {
     //inputElement это наш один текущий инпут
     inputElement.addEventListener("input", () => {
       checkInputValidity(formElement, inputElement, config);
-      //	toggleButtonState(inputList,buttonElement,config);
+      toggleButtonState(inputList,buttonElement,config);
       //передаем форму и инпут текущий потом будет следующий
     });
   });

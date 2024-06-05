@@ -1,4 +1,4 @@
-.popup__button-disabled{
+.popup__button_disabled{
 	background-color: rgba(255, 255, 255, 1);
 	color: rgba(196, 196, 196, 1);
 	pointer-events: none;
