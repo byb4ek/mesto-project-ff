@@ -2,6 +2,7 @@ import "../src/index.css";
 import { initialCards } from "./cards";
 import { openModal, closeModal} from "./componets/modal";
 import { createCard, deleteCard,likeCard } from "./componets/card";
+import { clearValidation,enableValidation } from "./componets/validation";
 
 const template = document.querySelector("#card-template").content;
 const cardList = document.querySelector(".places__list");
@@ -22,9 +23,20 @@ const urlNewCard = formNewCard.link;
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 
+const formNewProfile = document.forms["edit-profile"];
+const titleNewProfile =formNewProfile.name; 
+const descriptionNewProfile = formNewProfile.description;
+
 const popupContent = document.querySelector(".popup__content"); 
-const nameInput = popupContent.querySelector(".popup__input_type_name"); 
-const jobInput = popupContent.querySelector(".popup__input_type_description");
+
+const validationCofig={
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
 
 profileEditButton.addEventListener("click",()=>{
 	openModal(popupTypeEdit),fillDataToProfileForm(profileTitle,profileDescription)
@@ -60,8 +72,8 @@ function fillDataToProfileForm (title,descript){
 
 function popupEditProfileFormSubmit(evt) {
     evt.preventDefault(); 
-		const jobValue = jobInput.value;
-		const nameValue = nameInput.value;
+		const jobValue = descriptionNewProfile.value;
+		const nameValue = titleNewProfile.value;
 		profileTitle.textContent = nameValue;
 		profileDescription.textContent = jobValue;
 		closeModal(popupTypeEdit);
@@ -92,3 +104,7 @@ function openPopupImage(cardInfo){
 	caption.textContent=cardInfo.name;
 	openModal(popupTypeImage);
 }
+
+enableValidation(validationCofig); 
+
+/* clearValidation(profileForm, validationConfig);  */
