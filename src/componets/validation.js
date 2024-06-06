@@ -39,7 +39,7 @@ function checkInputValidity(formElement, inputElement, config) {
       config
     );
   } else {
-    hideInputError(formElement, inputElement, config);
+		hideInputError(formElement, inputElement, config);
   }
 }
 
@@ -50,7 +50,7 @@ const hasInvalidInput = (inputList) => {
   });
 };
 
-const toggleButtonState = (inputList, buttonElement, config) => {
+ const toggleButtonState = (inputList, buttonElement, config) => {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add(config.inactiveButtonClass);
   } else {
@@ -63,7 +63,7 @@ const setEventListeners = (formElement, config) => {
     formElement.querySelectorAll(config.inputSelector)
   );
   const buttonElement = formElement.querySelector(config.submitButtonSelector);
-  //toggleButtonState(inputList,buttonElement,config);
+  toggleButtonState(inputList,buttonElement,config);
   inputList.forEach((inputElement) => {
     //inputElement это наш один текущий инпут
     inputElement.addEventListener("input", () => {

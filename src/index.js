@@ -3,6 +3,7 @@ import { initialCards } from "./cards";
 import { openModal, closeModal } from "./componets/modal";
 import { createCard, deleteCard, likeCard } from "./componets/card";
 import { clearValidation, enableValidation } from "./componets/validation";
+import { cogortCard, userInfo,editProfile,addNewCard ,postAddLikeCard} from "./componets/api";
 
 const template = document.querySelector("#card-template").content;
 const cardList = document.querySelector(".places__list");
@@ -40,19 +41,19 @@ const validationCofig = {
 
 profileEditButton.addEventListener("click", () => {
   openModal(popupTypeEdit);
-	clearValidation(formNewProfile,validationCofig);
+  clearValidation(formNewProfile, validationCofig);
   fillDataToProfileForm(profileTitle, profileDescription);
 });
 
 popupNewCard.addEventListener("click", () => {
   openModal(popupTypeNewCard);
-	clearValidation(formNewCard,validationCofig)
+  clearValidation(formNewCard, validationCofig);
 });
 
 popupContent.addEventListener("submit", popupEditProfileFormSubmit);
 formNewCard.addEventListener("submit", addCard);
 
-initialCards.forEach((item) => {
+/* initialCards.forEach((item) => {
   const saveCard = createCard(
     item,
     template,
@@ -61,7 +62,7 @@ initialCards.forEach((item) => {
     deleteCard
   );
   cardList.append(saveCard);
-});
+}); */
 
 popupAll.forEach((item) => {
   item.classList.add("popup_is-animated");
@@ -88,6 +89,7 @@ function popupEditProfileFormSubmit(evt) {
   const nameValue = titleNewProfile.value;
   profileTitle.textContent = nameValue;
   profileDescription.textContent = jobValue;
+	editProfile(jobValue,nameValue);
   closeModal(popupTypeEdit);
 }
 
@@ -108,6 +110,7 @@ function addCard(evt) {
     openPopupImage,
     deleteCard
   );
+	addNewCard(titleCard,urlCard);
   cardList.prepend(saveNewCard);
   closeModal(popupTypeNewCard);
   formNewCard.reset();
@@ -123,3 +126,29 @@ function openPopupImage(cardInfo) {
 }
 
 enableValidation(validationCofig);
+
+/* const arrayPromise = [cogortCard(), userInfo()]; */
+
+Promise.all([cogortCard(), userInfo()])
+.then(([card, profile]) => {
+  renderCard(card);
+  renderProfile(profile);
+});
+
+function renderProfile(profile){
+	 profileTitle.textContent = profile.name;
+   profileDescription.textContent =profile.about;
+}
+
+function renderCard(card){
+	card.forEach((item) => {
+		const saveCard = createCard(
+			item,
+			template,
+			likeCard,
+			openPopupImage,
+			deleteCard
+		);
+		cardList.append(saveCard);
+	});
+}

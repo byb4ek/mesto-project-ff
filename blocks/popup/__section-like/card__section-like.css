@@ -1,0 +1,6 @@
+.card__section-like {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
