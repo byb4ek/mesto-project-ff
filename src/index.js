@@ -110,7 +110,7 @@ function addCard(evt) {
     openPopupImage,
     deleteCard
   );
-	addNewCard(titleCard,urlCard);
+	addNewCard(titleCard,urlCard);//ответ с сервера  
   cardList.prepend(saveNewCard);
   closeModal(popupTypeNewCard);
   formNewCard.reset();
