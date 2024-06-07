@@ -3,7 +3,13 @@ import { initialCards } from "./cards";
 import { openModal, closeModal } from "./componets/modal";
 import { createCard, deleteCard, likeCard } from "./componets/card";
 import { clearValidation, enableValidation } from "./componets/validation";
-import { cogortCard, userInfo,editProfile,addNewCard ,postAddLikeCard} from "./componets/api";
+import {
+  cogortCard,
+  userInfo,
+  editProfile,
+  addNewCard,
+  postAddLikeCard,
+} from "./componets/api";
 
 const template = document.querySelector("#card-template").content;
 const cardList = document.querySelector(".places__list");
@@ -89,7 +95,7 @@ function popupEditProfileFormSubmit(evt) {
   const nameValue = titleNewProfile.value;
   profileTitle.textContent = nameValue;
   profileDescription.textContent = jobValue;
-	editProfile(jobValue,nameValue);
+  editProfile(jobValue, nameValue);
   closeModal(popupTypeEdit);
 }
 
@@ -110,7 +116,7 @@ function addCard(evt) {
     openPopupImage,
     deleteCard
   );
-	addNewCard(titleCard,urlCard);
+  addNewCard(titleCard, urlCard);
   cardList.prepend(saveNewCard);
   closeModal(popupTypeNewCard);
   formNewCard.reset();
@@ -127,28 +133,31 @@ function openPopupImage(cardInfo) {
 
 enableValidation(validationCofig);
 
-/* const arrayPromise = [cogortCard(), userInfo()]; */
-
 Promise.all([cogortCard(), userInfo()])
-.then(([card, profile]) => {
-  renderCard(card);
-  renderProfile(profile);
-});
+  .then(([card, profile]) => {
+    renderCard(card,profile._id);
+    renderProfile(profile);
+  })
+  .catch((err)=>{console.log("Произошла ошибка при получении данных",err);
+	});
 
-function renderProfile(profile){
-	 profileTitle.textContent = profile.name;
-   profileDescription.textContent =profile.about;
+let userId = "";
+function renderProfile(user) {
+  profileTitle.textContent = user.name;
+  profileDescription.textContent = user.about;
+  userId = user._id;
 }
 
-function renderCard(card){
-	card.forEach((item) => {
-		const saveCard = createCard(
-			item,
-			template,
-			likeCard,
-			openPopupImage,
-			deleteCard
-		);
-		cardList.append(saveCard);
-	});
+function renderCard(card,userId) {
+  card.forEach((item) => {
+    const saveCard = createCard(
+      item,
+      template,
+      likeCard,
+      openPopupImage,
+      deleteCard,
+			userId
+    );
+    cardList.append(saveCard);
+  });
 }

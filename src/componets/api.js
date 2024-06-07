@@ -5,12 +5,12 @@ const authorization = {
 	}
 };
 
-
+//информация о пользователе компьютера 
 export function userInfo(){
 	return fetch(`${baseUrl}users/me`, authorization)
   .then(res => {return res.json()})
 }
-
+//информация о карточках когорты 
 export function cogortCard(){
 	return fetch(`${baseUrl}cards`, authorization)
 	.then(res => {return res.json()})
@@ -46,16 +46,44 @@ export function addNewCard(nameCard,linkCard){
 		.then(res=>{console.log(res);})
 }
 
-export function postAddLikeCard(likesCard){
-	fetch(`${baseUrl}cards`, {
+export function queryDeleteCard(idCard){
+	fetch(`${baseUrl}cards/${idCard}`, {
+		method: 'DELETE',
+		headers: {
+			authorization: 'dfed8c7f-1aa1-4d55-99dd-6ae0cf4089ca',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			_id: ``,
+		})
+	})
+		.then(res=>{console.log(res);})
+}
+
+/* 
+export function addLikeCard(id){
+	fetch(`${baseUrl}/cards/likes/${id}`, {
 		method: 'PUT',
 		headers: {
 			authorization: 'dfed8c7f-1aa1-4d55-99dd-6ae0cf4089ca',
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
-			likes: `${likesCard}`,
+			_id: `${id}`,
 		})
 	})
-		.then(res=>{console.log(res);})
 }
+
+export function deleteLikeCard(id){
+	fetch(`${baseUrl}/cards/likes/${id}`, {
+		method: 'DELETE',
+		headers: {
+			authorization: 'dfed8c7f-1aa1-4d55-99dd-6ae0cf4089ca',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			_id: `${id}`,
+		})
+	})
+}
+ */
