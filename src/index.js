@@ -3,13 +3,7 @@ import { initialCards } from "./cards";
 import { openModal, closeModal } from "./componets/modal";
 import { createCard, deleteCard, likeCard } from "./componets/card";
 import { clearValidation, enableValidation } from "./componets/validation";
-import {
-  cogortCard,
-  userInfo,
-  editProfile,
-  addNewCard,
-  postAddLikeCard,
-} from "./componets/api";
+import { cogortCard, userInfo,editProfile,addNewCard ,postAddLikeCard} from "./componets/api";
 
 const template = document.querySelector("#card-template").content;
 const cardList = document.querySelector(".places__list");
@@ -57,29 +51,8 @@ popupNewCard.addEventListener("click", () => {
 });
 
 popupContent.addEventListener("submit", popupEditProfileFormSubmit);
+formNewCard.addEventListener("submit", addCard);
 
-const titleCard = titleNewCard.value;
-const urlCard = urlNewCard.value;
-const newCards = {
-  name: titleCard,
-  link: urlCard,
-};
-
-formNewCard.addEventListener("submit", (evt)=> {
-	Promise.all([userInfo()])
-  .then(([profile])=>{addCardSubmit(evt,profile);})});
-
-
-/* initialCards.forEach((item) => {
-  const saveCard = createCard(
-    item,
-    template,
-    likeCard,
-    openPopupImage,
-    deleteCard
-  );
-  cardList.append(saveCard);
-}); */
 
 popupAll.forEach((item) => {
   item.classList.add("popup_is-animated");
@@ -106,41 +79,12 @@ function popupEditProfileFormSubmit(evt) {
   const nameValue = titleNewProfile.value;
   profileTitle.textContent = nameValue;
   profileDescription.textContent = jobValue;
-  editProfile(jobValue, nameValue);
+	editProfile(jobValue,nameValue);
   closeModal(popupTypeEdit);
 }
 
-/* function addCard(evt) {
-  evt.preventDefault();
-  console.log(newCards);
-  const titleCard = titleNewCard.value;
-  const urlCard = urlNewCard.value;
-  const newCards = {
-    name: titleCard,
-    link: urlCard,
-  };
-  //надо в addNewCard передать
-  addNewCard(titleCard, urlCard).then((card) => {
-    //нужно как то получить информацию о карточке
-    newCards.name = titleCard;
-    newCards.link = urlCard;
-    const saveNewCard = createCard(
-      card,
-      template,
-      likeCard,
-      openPopupImage,
-      deleteCard,
-      newCards._id
-    );
-    cardList.prepend(saveNewCard);
-    closeModal(popupTypeNewCard);
-  });
-   cardList.prepend(saveNewCard);
-  closeModal(popupTypeNewCard);
-  formNewCard.reset();
-} */
-
-function addCardSubmit(evt,profile) {
+//добавляем новую карточку 
+function addCard(evt) {
   evt.preventDefault();
   const titleCard = titleNewCard.value;
   const urlCard = urlNewCard.value;
@@ -155,8 +99,7 @@ function addCardSubmit(evt,profile) {
     template,
     likeCard,
     openPopupImage,
-    deleteCard,
-		profile._id
+    deleteCard
   );
 	addNewCard(titleCard,urlCard);
   cardList.prepend(saveNewCard);
@@ -175,34 +118,26 @@ function openPopupImage(cardInfo) {
 
 enableValidation(validationCofig);
 
-let userId = "";
-function renderProfile(user) {
-  profileTitle.textContent = user.name;
-  profileDescription.textContent = user.about;
-  userId = user._id;
+Promise.all([userInfo(),cogortCard() ])
+.then(([user, card]) => {
+  renderProfile(user);
+  renderCard(card);
+});
+
+function renderProfile(user){
+	 profileTitle.textContent = user.name;
+   profileDescription.textContent =user.about;
 }
 
-function renderCard(card, userId) {
-  card.forEach((item) => {
-    const saveCard = createCard(
-      item,
-      template,
-      likeCard,
-      openPopupImage,
-      deleteCard,
-      userId
-    );
-    cardList.append(saveCard);
-  });
+function renderCard(card){
+	card.forEach((item) => {
+		const saveCard = createCard(
+			item,
+			template,
+			likeCard,
+			openPopupImage,
+			deleteCard
+		);
+		cardList.append(saveCard);
+	});
 }
-
-Promise.all([cogortCard(), userInfo()])
-  .then(([card, profile]) => {
-    renderCard(card, profile._id);
-    renderProfile(profile);
-	  console.log(profile)
-
-  })
-  .catch((err) => {
-    console.log("Произошла ошибка при получении данных", err);
-  });
