@@ -5,6 +5,12 @@ const authorization = {
 	}
 };
 
+/* const authorization_ContentType =   {
+	headers: {
+	authorization: 'dfed8c7f-1aa1-4d55-99dd-6ae0cf4089ca',
+	'Content-Type': 'application/json'
+}}; */
+
 //информация о пользователе компьютера 
 export function userInfo(){
 	return fetch(`${baseUrl}users/me`, authorization)

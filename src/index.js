@@ -57,7 +57,18 @@ popupNewCard.addEventListener("click", () => {
 });
 
 popupContent.addEventListener("submit", popupEditProfileFormSubmit);
-formNewCard.addEventListener("submit", addCard);
+
+const titleCard = titleNewCard.value;
+const urlCard = urlNewCard.value;
+const newCards = {
+  name: titleCard,
+  link: urlCard,
+};
+
+formNewCard.addEventListener("submit", (evt)=> {
+	Promise.all([userInfo()])
+  .then(([profile])=>{addCardSubmit(evt,profile);})});
+
 
 /* initialCards.forEach((item) => {
   const saveCard = createCard(
@@ -99,7 +110,37 @@ function popupEditProfileFormSubmit(evt) {
   closeModal(popupTypeEdit);
 }
 
-function addCard(evt) {
+/* function addCard(evt) {
+  evt.preventDefault();
+  console.log(newCards);
+  const titleCard = titleNewCard.value;
+  const urlCard = urlNewCard.value;
+  const newCards = {
+    name: titleCard,
+    link: urlCard,
+  };
+  //надо в addNewCard передать
+  addNewCard(titleCard, urlCard).then((card) => {
+    //нужно как то получить информацию о карточке
+    newCards.name = titleCard;
+    newCards.link = urlCard;
+    const saveNewCard = createCard(
+      card,
+      template,
+      likeCard,
+      openPopupImage,
+      deleteCard,
+      newCards._id
+    );
+    cardList.prepend(saveNewCard);
+    closeModal(popupTypeNewCard);
+  });
+   cardList.prepend(saveNewCard);
+  closeModal(popupTypeNewCard);
+  formNewCard.reset();
+} */
+
+function addCardSubmit(evt,profile) {
   evt.preventDefault();
   const titleCard = titleNewCard.value;
   const urlCard = urlNewCard.value;
@@ -114,9 +155,10 @@ function addCard(evt) {
     template,
     likeCard,
     openPopupImage,
-    deleteCard
+    deleteCard,
+		profile._id
   );
-  addNewCard(titleCard, urlCard);
+	addNewCard(titleCard,urlCard);
   cardList.prepend(saveNewCard);
   closeModal(popupTypeNewCard);
   formNewCard.reset();
@@ -133,14 +175,6 @@ function openPopupImage(cardInfo) {
 
 enableValidation(validationCofig);
 
-Promise.all([cogortCard(), userInfo()])
-  .then(([card, profile]) => {
-    renderCard(card,profile._id);
-    renderProfile(profile);
-  })
-  .catch((err)=>{console.log("Произошла ошибка при получении данных",err);
-	});
-
 let userId = "";
 function renderProfile(user) {
   profileTitle.textContent = user.name;
@@ -148,7 +182,7 @@ function renderProfile(user) {
   userId = user._id;
 }
 
-function renderCard(card,userId) {
+function renderCard(card, userId) {
   card.forEach((item) => {
     const saveCard = createCard(
       item,
@@ -156,8 +190,19 @@ function renderCard(card,userId) {
       likeCard,
       openPopupImage,
       deleteCard,
-			userId
+      userId
     );
     cardList.append(saveCard);
   });
 }
+
+Promise.all([cogortCard(), userInfo()])
+  .then(([card, profile]) => {
+    renderCard(card, profile._id);
+    renderProfile(profile);
+	  console.log(profile)
+
+  })
+  .catch((err) => {
+    console.log("Произошла ошибка при получении данных", err);
+  });

@@ -12,16 +12,18 @@ export function createCard(infoCard ,template ,likeCard ,openPopupImage ,deleteC
   cardImage.src = infoCard.link;
   cardTitle.textContent = infoCard.name;
 	//отвечает за количество лайков поставленных на карточку
-  cardCountLike.textContent = infoCard.likes.length;
-	
 	//console.log(infoCard);
+  cardCountLike.textContent = infoCard.likes.lenght;
+	
 	//слушатель лайка
   cardLikeButton.addEventListener("click", likeCard);
 	//слушатель удаления карточки владельцем
+	console.log(infoCard);
 	if (infoCard.owner._id === userId){
 		cardDeleteButton.addEventListener("click",()=>{
 			const cardId = infoCard._id;
 			deleteCard(card, cardId);
+			queryDeleteCard(cardId);
 		})
 	} else {
   cardDeleteButton.style.display = "none";
