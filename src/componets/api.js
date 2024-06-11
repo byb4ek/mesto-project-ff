@@ -66,23 +66,11 @@ export const addNewCard = (nameCard, linkCard) => {
 
 //Удаление карточки
 export const queryDeleteCard = (id) => {
-  //айди самой карточки
   fetch(`${config.baseUrl}cards/${id}`, {
     method: "DELETE",
-    headers: config.headers,
-    body: JSON.stringify({
-      _id: ``,
-    }),
+    headers: config.headers
   })
-    .then((res) => {
-      console.log(res);
-    })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+	.then(result=>result.json())
 };
 
 //Постановка лайка

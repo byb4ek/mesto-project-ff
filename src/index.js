@@ -54,7 +54,6 @@ popupContent.addEventListener("submit", popupEditProfileFormSubmit);
 
 formNewCard.addEventListener("submit", addCard);
 
-
 popupAll.forEach((item) => {
   item.classList.add("popup_is-animated");
 });
@@ -95,43 +94,6 @@ function addCard(evt) {
 		})
 }
 
-/* function addCard(evt) {
-	evt.preventDefault();
-	//const userId = "dfed8c7f-1aa1-4d55-99dd-6ae0cf4089ca";
-  const titleCard = titleNewCard.value;
-	console.log(titleCard);
-  const urlCard = urlNewCard.value;
-	console.log(urlCard);
-	const arrLikes = [];
-	addNewCard(titleCard,urlCard)
-		.then((res)=>{
-			res.json();
-		})
-  const newCards = {
-    name: titleCard,
-    link: urlCard,
-		likes: arrLikes,
-		owner: {
-			_id: userId
-		}
-  };
-  newCards.name = titleCard;
-  newCards.link = urlCard;
-	newCards.likes = arrLikes;
-	console.log(newCards);
-  const saveNewCard = createCard(
-    newCards,
-    template,
-    likeCard,
-    openPopupImage,
-    deleteCard,
-		userId
-  );
-  cardList.prepend(saveNewCard);
-  closeModal(popupTypeNewCard);
-  formNewCard.reset();
-} */
-
 function openPopupImage(cardInfo) {
   const imgPop = popupTypeImage.querySelector(".popup__image");
   const caption = popupTypeImage.querySelector(".popup__caption");
@@ -143,29 +105,18 @@ function openPopupImage(cardInfo) {
 
 enableValidation(validationCofig);
 
-let userId = '';
 Promise.all([userInfo(),cogortCard() ])
 .then(([user, card]) => {
+//Пишем информацию о пользователе на сайт 
    profileTitle.textContent = user.name;
    profileDescription.textContent =user.about;
-	 userId = user._id;
-	// console.log(userId);
+	 const userId = user._id;
    renderCard(card,userId);
 });
-
-//Пишем информацию о пользователе на сайт 
-/* let userId = '';
-function renderProfile(user){
-	 profileTitle.textContent = user.name;
-   profileDescription.textContent =user.about;
-	 userId = user._id;
-	 console.log(userId);
-} */
 
 //Добавляем на страницу имеющиеся карточки на сервере 
 function renderCard(card,userId){
 	card.forEach((item) => {
-		console.log(item);
 		const saveCard = createCard(
 			item,
 			template,

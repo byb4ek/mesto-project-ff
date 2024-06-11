@@ -1,4 +1,3 @@
-import { info } from "autoprefixer";
 import { queryDeleteCard } from "./api";
 
 export function createCard(infoCard ,template ,likeCard ,openPopupImage ,deleteCard,userId) {
@@ -11,7 +10,10 @@ export function createCard(infoCard ,template ,likeCard ,openPopupImage ,deleteC
 
   cardCountLike.textContent = infoCard.likes.length;
 
-	//console.log(infoCard);
+  cardImage.alt = infoCard.name;
+  cardImage.src = infoCard.link;
+  cardTitle.textContent = infoCard.name;
+
 	if(infoCard.owner._id === userId){
 		cardDeleteButton.addEventListener("click",()=>{
 			const cardId = infoCard._id;
@@ -21,21 +23,17 @@ export function createCard(infoCard ,template ,likeCard ,openPopupImage ,deleteC
 		cardDeleteButton.style.display = "none";
 	}
 	
-  cardImage.alt = infoCard.name;
-  cardImage.src = infoCard.link;
-  cardTitle.textContent = infoCard.name;
-  cardDeleteButton.addEventListener("click", () => {
-    deleteCard(card);
-  });
-	
   cardLikeButton.addEventListener("click", likeCard);
 	cardImage.addEventListener("click", ()=>{openPopupImage(infoCard)});
   return card;
 }
 
 export function deleteCard(card,cardId) {
-  card.remove();
-	queryDeleteCard(cardId); 
+	return queryDeleteCard(cardId)
+	.then(()=>{
+		card.remove();
+	})
+	.catch((err)=>console.log("Ошибка при удалении",err))
 }
 
 export function likeCard(evt){
