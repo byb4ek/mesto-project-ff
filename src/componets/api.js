@@ -49,7 +49,7 @@ export const editProfile = (about, name) => {
 
 //Добавление новой карточки
 export const addNewCard = (nameCard, linkCard) => {
-  fetch(`${config.baseUrl}cards`, {
+  return fetch(`${config.baseUrl}cards`, {
     method: "POST",
     headers: config.headers,
     body: JSON.stringify({
