@@ -1,7 +1,7 @@
 import "../src/index.css";
 import { initialCards } from "./cards";
 import { openModal, closeModal } from "./componets/modal";
-import { createCard, deleteCard, likeCard } from "./componets/card";
+import { createCard, deleteCard, likeCard,like } from "./componets/card";
 import { clearValidation, enableValidation } from "./componets/validation";
 import { cogortCard, userInfo,editProfile,addNewCard ,postAddLikeCard} from "./componets/api";
 
@@ -88,7 +88,7 @@ function addCard(evt) {
 	evt.preventDefault();
 	return addNewCard(titleNewCard.value,urlNewCard.value)
 		.then((card)=>{
-			cardList.prepend(createCard(card,template,likeCard,openPopupImage,deleteCard,card.owner._id));
+			cardList.prepend(createCard(card,template,like,openPopupImage,deleteCard,card.owner._id));
 			closeModal(popupTypeNewCard);
 			formNewCard.reset();
 		})
@@ -120,7 +120,7 @@ function renderCard(card,userId){
 		const saveCard = createCard(
 			item,
 			template,
-			likeCard,
+			like,
 			openPopupImage,
 			deleteCard,
 			userId

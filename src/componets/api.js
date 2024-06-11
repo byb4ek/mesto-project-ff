@@ -32,7 +32,7 @@ export const cogortCard = () => {
 
 //Редактирование профиля
 export const editProfile = (about, name) => {
-  fetch(`${config.baseUrl}users/me`, {
+  return fetch(`${config.baseUrl}users/me`, {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
@@ -66,22 +66,23 @@ export const addNewCard = (nameCard, linkCard) => {
 
 //Удаление карточки
 export const queryDeleteCard = (id) => {
-  fetch(`${config.baseUrl}cards/${id}`, {
+ return fetch(`${config.baseUrl}cards/${id}`, {
     method: "DELETE",
     headers: config.headers
   })
-	.then(result=>result.json())
+	.then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 };
 
-//Постановка лайка
+//Добавление лайка
 export const addLikeCard = (id) => {
-  fetch(`${config.baseUrl}cards/likes/${id}`, {
-    //айди самой карточки
+  return fetch(`${config.baseUrl}cards/likes/${id}`, {
     method: "PUT",
-    headers: config.headers,
-    body: JSON.stringify({
-      _id: `${id}`,
-    }),
+    headers: config.headers
   }).then((res) => {
     if (res.ok) {
       return res.json();
@@ -92,13 +93,9 @@ export const addLikeCard = (id) => {
 
 //Снятие лайка
 export const deleteLikeCard = (id) => {
-  fetch(`${config.baseUrl}cards/likes/${id}`, {
-    //айди самой карточки
+  return fetch(`${config.baseUrl}cards/likes/${id}`, {
     method: "DELETE",
-    headers: config.headers,
-    body: JSON.stringify({
-      _id: `${id}`,
-    }),
+    headers: config.headers
   }).then((res) => {
     if (res.ok) {
       return res.json();
@@ -109,7 +106,7 @@ export const deleteLikeCard = (id) => {
 
 //Обновление аватара
 export const updateAvatar = (avatarLink) => {
-  fetch(`${config.baseUrl}users/me/avatar`, {
+  return fetch(`${config.baseUrl}users/me/avatar`, {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
