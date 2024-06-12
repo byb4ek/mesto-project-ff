@@ -110,9 +110,10 @@ export const updateAvatar = (avatarLink) => {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
-      link: `${avatarLink}`,
-    }),
+      avatar: `${avatarLink}`,
+    })
   }).then((res) => {
+		console.log(res.json());
     if (res.ok) {
       return res.json();
     }

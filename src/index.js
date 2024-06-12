@@ -1,9 +1,8 @@
 import "../src/index.css";
-import { initialCards } from "./cards";
 import { openModal, closeModal } from "./componets/modal";
-import { createCard, deleteCard, likeCard,like } from "./componets/card";
+import { createCard, deleteCard,like } from "./componets/card";
 import { clearValidation, enableValidation } from "./componets/validation";
-import { cogortCard, userInfo,editProfile,addNewCard ,postAddLikeCard} from "./componets/api";
+import { cogortCard, userInfo,editProfile,addNewCard,updateAvatar } from "./componets/api";
 
 const template = document.querySelector("#card-template").content;
 const cardList = document.querySelector(".places__list");
@@ -127,4 +126,26 @@ function renderCard(card,userId){
 		);
 		cardList.append(saveCard);
 	});
+}
+
+//изменение аватара 
+const avatarImage = document.querySelector(".profile__image");
+const modalAvatar = document.querySelector(".popup_type_new-avatar");
+
+const avatarForm = document.forms["new-avatar_img"];
+const avatarUrlForm = avatarForm.link;
+
+avatarImage.addEventListener('click', ()=>{
+	openModal(modalAvatar);
+})
+
+avatarForm.addEventListener("submit", editAvatarFormSubmit);
+
+function editAvatarFormSubmit(evt) {
+  evt.preventDefault();
+  const urlValue = avatarUrlForm.value;
+  const avatarDiv = document.querySelector('.profile__image');
+	avatarDiv.style.backgroundImage = `url(${urlValue})`;
+	updateAvatar(urlValue);
+  closeModal(modalAvatar);
 }
