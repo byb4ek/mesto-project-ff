@@ -1,4 +1,4 @@
-![supasnap-2024-06-14-20 44 46](https://github.com/byb4ek/mesto-project-ff/assets/157111926/6b5bff91-6356-4731-88a5-952fd9ae9af8)# Проектная работа Mesto
+# Проектная работа Mesto
 ------ 
 [Ссылка на работу](https://byb4ek.github.io/mesto-project-ff/)
 ------ 
@@ -10,9 +10,11 @@
 4. Позволяет лайкать карточки других пользователей, открывать попапы с изображениями.
 5. Открывает модальные окна, в которых находятся валидированные формы. 
 ------
-    ![Uploading supasnap-2024-06-14-20.44.46.png…](![supasnap-2024-06-14-20 44 55](https://github.com/byb4ek/mesto-project-ff/assets/157111926/fe08d3f8-030c-404d-8a81-3504e825c034)
+![supasnap-2024-06-14-20 44 46](https://github.com/byb4ek/mesto-project-ff/assets/157111926/6b5bff91-6356-4731-88a5-952fd9ae9af8)
+
+![Uploading supasnap-2024-06-14-20.44.46.png…](![supasnap-2024-06-14-20 44 55](https://github.com/byb4ek/mesto-project-ff/assets/157111926/fe08d3f8-030c-404d-8a81-3504e825c034)
 ![supasnap-2024-06-14-20 44 51](https://github.com/byb4ek/mesto-project-ff/assets/157111926/1e0108ea-a550-4e36-ae49-f12fc1c3aca9)
-)
+
 ![supasnap-2024-06-14-20 43 43](https://github.com/byb4ek/mesto-project-ff/assets/157111926/ba5e1e05-04bf-47e5-9e63-481ee74c91ff)
 
 ------ 
