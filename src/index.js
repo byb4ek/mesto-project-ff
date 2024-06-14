@@ -173,7 +173,7 @@ function editAvatarFormSubmit(evt) {
       avatarForm.reset();
     })
     .catch((err) => renderError(`Ошибка: ${err}`))
-    .finally(() => renderLoading(false, formNewCard));
+    .finally(() => renderLoading(false, avatarForm));
 }
 
 enableValidation(validationCofig);

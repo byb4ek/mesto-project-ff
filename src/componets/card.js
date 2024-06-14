@@ -8,8 +8,6 @@ export function createCard(infoCard,template,like,openPopupImage, deleteCard, us
   const cardTitle = card.querySelector(".card__title");
   const cardDeleteButton = card.querySelector(".card__delete-button");
   const cardLikeButton = card.querySelector(".card__like-button");
-	const deleteCardModal = document.querySelector(".popup_type_delete-card");
-	const deleteCardModalSubmit=deleteCardModal.querySelector('.popup__button');
 
   cardCountLike.textContent = infoCard.likes.length;
 
@@ -20,11 +18,7 @@ export function createCard(infoCard,template,like,openPopupImage, deleteCard, us
   if (infoCard.owner._id === userId) {
     cardDeleteButton.addEventListener("click", () => {
       const cardId = infoCard._id;
-			openModal(deleteCardModal);
-			deleteCardModalSubmit.addEventListener("submit", () => {
-			closeModal(deleteCardModal);
       deleteCard(card, cardId);
-			});
     });
   } else {
     cardDeleteButton.style.display = "none";
