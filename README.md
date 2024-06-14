@@ -8,7 +8,7 @@
 5. Открывает модальные окна, в которых находятся валидированные формы.
 
 Общий вид проекта:
-[](https://github.com/byb4ek/mesto-project-ff/assets/157111926/6d33f8ae-4942-4200-b199-565c9bff4ddd)
+![supasnap-2024-06-14-20 43 43](https://github.com/byb4ek/mesto-project-ff/assets/157111926/66d1c2c9-e237-44d7-9838-112d34d58ff0)
 
 Обновление автарки:
 ![supasnap-2024-06-14-20 44 46](https://github.com/byb4ek/mesto-project-ff/assets/157111926/caaa15e3-3420-4238-baac-ffc92333b95e)
