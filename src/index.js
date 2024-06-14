@@ -186,5 +186,6 @@ Promise.all([userInfo(), cogortCard()]).then(([user, card]) => {
   renderCard(card, userId);
   updateAvatar(user.avatar).then((data) => {
     avatarDiv.style.backgroundImage = `url(${data.avatar})`;
-  });
+  })
+	.catch((err) => renderError(`Ошибка: ${err}`));
 });
