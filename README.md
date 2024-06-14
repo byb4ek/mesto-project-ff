@@ -8,17 +8,17 @@
 5. Открывает модальные окна, в которых находятся валидированные формы.
 
 Общий вид проекта:
-[supasnap-2024-06-14-20 43 43](https://github.com/byb4ek/mesto-project-ff/assets/157111926/ba5e1e05-04bf-47e5-9e63-481ee74c91ff)
+[](https://github.com/byb4ek/mesto-project-ff/assets/157111926/6d33f8ae-4942-4200-b199-565c9bff4ddd)
 
 Обновление автарки:
-[supasnap-2024-06-14-20 44 46](https://github.com/byb4ek/mesto-project-ff/assets/157111926/6b5bff91-6356-4731-88a5-952fd9ae9af8)
+![supasnap-2024-06-14-20 44 46](https://github.com/byb4ek/mesto-project-ff/assets/157111926/caaa15e3-3420-4238-baac-ffc92333b95e)
 
 Добавление новой карточки:
-[Uploading supasnap-2024-06-14-20.44.46.png…](![supasnap-2024-06-14-20 44 55](https://github.com/byb4ek/mesto-project-ff/assets/157111926/fe08d3f8-030c-404d-8a81-3504e825c034)
+![supasnap-2024-06-14-20 44 55](https://github.com/byb4ek/mesto-project-ff/assets/157111926/0799f83a-4a2b-47d8-a467-94d2ec41e290)
 
 Редактирование профиля:
-[supasnap-2024-06-14-20 44 51](https://github.com/byb4ek/mesto-project-ff/assets/157111926/1e0108ea-a550-4e36-ae49-f12fc1c3aca9)
- 
+ ![supasnap-2024-06-14-20 44 51](https://github.com/byb4ek/mesto-project-ff/assets/157111926/f9bb22ca-b73a-4fd7-b485-2ea299f133c5)
+
 ## Функциональность
 * Валидация форм редактирования профиля и добавления нового места.
 * Интеграция с API для загрузки информации о пользователе и местах.
