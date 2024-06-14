@@ -6,15 +6,19 @@ const config = {
   },
 };
 
+const handleResponse = (response) => {
+	if (response.ok) {
+		return response.json();
+	}
+	return Promise.reject(`Ошибка: ${response.status}`);
+}
+
 //информация о пользователе компьютера
 export const userInfo = () => {
   return fetch(`${config.baseUrl}users/me`, {
     headers: config.headers,
   }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
+   return handleResponse(res);
   });
 };
 
@@ -23,10 +27,7 @@ export const cogortCard = () => {
   return fetch(`${config.baseUrl}cards`, {
     headers: config.headers,
   }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
+   return handleResponse(res);
   });
 };
 
@@ -40,10 +41,7 @@ export const editProfile = (about, name) => {
       about: `${about}`,
     }),
   }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
+   return handleResponse(res);
   });
 };
 
@@ -57,10 +55,7 @@ export const addNewCard = (nameCard, linkCard) => {
       link: `${linkCard}`,
     }),
   }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
+   return handleResponse(res);
   });
 };
 
@@ -71,10 +66,7 @@ export const queryDeleteCard = (id) => {
     headers: config.headers
   })
 	.then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
+   return handleResponse(res);
   });
 };
 
@@ -84,10 +76,7 @@ export const addLikeCard = (id) => {
     method: "PUT",
     headers: config.headers
   }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
+   return handleResponse(res);
   });
 };
 
@@ -97,26 +86,19 @@ export const deleteLikeCard = (id) => {
     method: "DELETE",
     headers: config.headers
   }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
+   return handleResponse(res);
   });
 };
 
 //Обновление аватара
-export const updateAvatar = (avatarLink) => {
+export const updateAvatar = (avatar) => {
   return fetch(`${config.baseUrl}users/me/avatar`, {
     method: "PATCH",
     headers: config.headers,
     body: JSON.stringify({
-      avatar: `${avatarLink}`,
+     avatar: avatar //можно так писать"avatar" когда названия сопадают (анологичная запись )
     })
   }).then((res) => {
-		console.log(res.json());
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
+   return handleResponse(res);
   });
 };

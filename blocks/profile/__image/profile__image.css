@@ -30,10 +30,19 @@
   .profile__image {
     margin: 0 10px 0 0;
   }
+
+	.profile__image:hover::before {
+		top: 19%;
+	}
 }
 
 @media screen and (max-width: 480px) {
   .profile__image {
     margin-right: 0;
   }
+
+	.profile__image:hover::before {
+		top: 11%;
+    left: 36%;
+	}
 }
