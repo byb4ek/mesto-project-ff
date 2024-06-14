@@ -33,6 +33,14 @@ const formNewProfile = document.forms["edit-profile"];
 const titleNewProfile = formNewProfile.name;
 const descriptionNewProfile = formNewProfile.description;
 
+const avatarImage = document.querySelector(".profile__image");
+const modalAvatar = document.querySelector(".popup_type_new-avatar");
+
+const avatarForm = document.forms["new-avatar_img"];
+const avatarUrlForm = avatarForm.link;
+
+const avatarDiv = document.querySelector(".profile__image");
+
 const validationCofig = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
@@ -53,9 +61,15 @@ popupNewCard.addEventListener("click", () => {
   clearValidation(formNewCard, validationCofig);
 });
 
+avatarImage.addEventListener("click", () => {
+  openModal(modalAvatar);
+});
+
 formNewProfile.addEventListener("submit", popupEditProfileFormSubmit);
 
 formNewCard.addEventListener("submit", addCard);
+
+avatarForm.addEventListener("submit", editAvatarFormSubmit);
 
 popupAll.forEach((item) => {
   item.classList.add("popup_is-animated");
@@ -76,31 +90,32 @@ function fillDataToProfileForm(title, descript) {
   describe.value = descript.textContent;
 }
 
-/* const saveFormButton = document.querySelector(".save-form_button");
 
 function renderLoading(isLoading, form) {
+	//находим спаны на форме
+  const saveFormButton = form.button.querySelector(".popup__button__save");
+  const savingFormButton = form.button.querySelector(".popup__button__saving");
   if (isLoading) {
-    saveFormButton.classList.add("save__visible");
-    form.validationCofig.submitButtonSelector.classList.add("content__hidden");
+		//убираем надпись "Сохранить"
+    saveFormButton.classList.add("popup__button__span_no-visible");
+		
+    savingFormButton.classList.add("popup__button__span_visible");
   } else {
-    saveFormButton.classList.remove("save__visible");
-    form.validationCofig.submitButtonSelector.classList.remove(
-      "content__hidden"
-    );
+    saveFormButton.classList.remove("popup__button__span_no-visible");
+    savingFormButton.classList.remove("popup__button__span_visible");
   }
-} */
+}
 
 function popupEditProfileFormSubmit(evt) {
   evt.preventDefault();
- /*  renderLoading(true, formNewProfile); */
+  renderLoading(true, formNewProfile);
   const jobValue = descriptionNewProfile.value;
   const nameValue = titleNewProfile.value;
   profileTitle.textContent = nameValue;
   profileDescription.textContent = jobValue;
   editProfile(jobValue, nameValue)
-  /*   .then((res) => renderResult(res.name))
     .catch((err) => renderError(`Ошибка: ${err}`))
-    .finally(() => renderLoading(false)); */
+    .finally(() => renderLoading(false,formNewProfile));
   closeModal(popupTypeEdit);
 }
 
@@ -140,12 +155,10 @@ Promise.all([userInfo(), cogortCard()]).then(([user, card]) => {
   profileDescription.textContent = user.about;
   const userId = user._id;
   renderCard(card, userId);
-/* 	console.log(avatar); */
-	/* updateAvatar(urlValue).then((data) => {
-    console.log(data);
+  console.log("Promise ", user.avatar);
+  updateAvatar(user.avatar).then((data) => {
     avatarDiv.style.backgroundImage = `url(${data.avatar})`;
-    closeModal(modalAvatar);
-  }); */
+  });
 });
 
 //Добавляем на страницу имеющиеся карточки на сервере
@@ -163,26 +176,14 @@ function renderCard(card, userId) {
   });
 }
 
-//изменение аватара
-const avatarImage = document.querySelector(".profile__image");
-const modalAvatar = document.querySelector(".popup_type_new-avatar");
-
-const avatarForm = document.forms["new-avatar_img"];
-const avatarUrlForm = avatarForm.link;
-
-avatarImage.addEventListener("click", () => {
-  openModal(modalAvatar);
-});
-
-avatarForm.addEventListener("submit", editAvatarFormSubmit);
-const avatarDiv = document.querySelector(".profile__image");
-
 function editAvatarFormSubmit(evt) {
   evt.preventDefault();
   const urlValue = avatarUrlForm.value;
   updateAvatar(urlValue).then((data) => {
+    console.log("Submit ", urlValue);
     console.log(data);
     avatarDiv.style.backgroundImage = `url(${data.avatar})`;
     closeModal(modalAvatar);
+    avatarForm.reset();
   });
 }
