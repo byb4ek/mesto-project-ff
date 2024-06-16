@@ -93,11 +93,7 @@ function fillDataToProfileForm(title, descript) {
 function renderLoading(isLoading, form) {
   //находим спаны на форме
   const saveFormButton = form.button.querySelector(".popup__button__save");
-  if (isLoading) {
-		saveFormButton.textContent = "Сохранение...";
-  } else {
-		saveFormButton.textContent = "Сохранить";
-  }
+  saveFormButton.textContent = isLoading ? "Сохранение..." : "Сохранить";
 }
 
 function popupEditProfileFormSubmit(evt) {
@@ -105,9 +101,12 @@ function popupEditProfileFormSubmit(evt) {
   renderLoading(true, formNewProfile);
   const jobValue = descriptionNewProfile.value;
   const nameValue = titleNewProfile.value;
-  profileTitle.textContent = nameValue;
-  profileDescription.textContent = jobValue;
   editProfile(jobValue, nameValue)
+    .then((res) => {
+			console.log(res);
+      profileTitle.textContent = res.name;
+      profileDescription.textContent = res.about;
+    })
     .catch((err) => renderError(`Ошибка: ${err}`))
     .finally(() => renderLoading(false, formNewProfile));
   closeModal(popupTypeEdit);
@@ -146,8 +145,8 @@ function openPopupImage(cardInfo) {
 }
 
 //Добавляем на страницу имеющиеся карточки на сервере
-function renderCard(card, userId) {
-  card.forEach((item) => {
+function renderCards(cards, userId) {
+  cards.forEach((item) => {
     const saveCard = createCard(
       item,
       template,
@@ -183,9 +182,10 @@ Promise.all([userInfo(), cogortCard()]).then(([user, card]) => {
   profileTitle.textContent = user.name;
   profileDescription.textContent = user.about;
   const userId = user._id;
-  renderCard(card, userId);
-  updateAvatar(user.avatar).then((data) => {
-    avatarDiv.style.backgroundImage = `url(${data.avatar})`;
-  })
-	.catch((err) => renderError(`Ошибка: ${err}`));
+  renderCards(card, userId);
+  updateAvatar(user.avatar)
+    .then((data) => {
+      avatarDiv.style.backgroundImage = `url(${data.avatar})`;
+    })
+    .catch((err) => renderError(`Ошибка: ${err}`));
 });
