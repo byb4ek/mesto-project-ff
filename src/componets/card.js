@@ -16,9 +16,6 @@ export function createCard(
   const cardDeleteButton = card.querySelector(".card__delete-button");
   const cardLikeButton = card.querySelector(".card__like-button");
 
-  const deleteCardModal = document.querySelector(".popup_type_delete-card");
-  const deleteCardForm = document.forms["delete-card"];
-
   const cardId = infoCard._id;
 
   cardCountLike.textContent = infoCard.likes.length;
@@ -29,7 +26,7 @@ export function createCard(
 
   if (infoCard.owner._id === userId) {
     cardDeleteButton.addEventListener("click", () => {
-      cardDeleteModal(deleteCardForm, deleteCardModal, card, cardId);
+      openDeleteModal(card, cardId);
     });
   } else {
     cardDeleteButton.style.display = "none";
@@ -52,18 +49,22 @@ export function createCard(
   return card;
 }
 
-function cardDeleteModal(
-  deleteCardForm,
-  deleteCardModal,
-  cardToDelete,
-  cardToDeleteId
-) {
+const deleteCardModal = document.querySelector(".popup_type_delete-card");
+const deleteCardForm = document.forms["delete-card"];
+let cardToDelete, cardToDeleteId;
+
+function openDeleteModal(card, cardId) {
   openModal(deleteCardModal);
-  deleteCardForm.addEventListener("submit", () => {
-    closeModal(deleteCardModal);
-    deleteCard(cardToDelete, cardToDeleteId);
-  });
+  cardToDelete = card;
+  cardToDeleteId = cardId;
 }
+
+deleteCardForm.addEventListener("submit", () => {
+  closeModal(deleteCardModal);
+  if (cardToDelete && cardToDeleteId) {
+    deleteCard(cardToDelete, cardToDeleteId);
+  }
+});
 
 export function deleteCard(card, cardId) {
   return queryDeleteCard(cardId)
